@@ -8,7 +8,7 @@ export default function HomeScreen() {
   return (
     <ScrollView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcommen!</ThemedText>
+        <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
