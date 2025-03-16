@@ -3,7 +3,7 @@ import time
 from ultralytics import YOLO
 
 # Load the YOLO11 model
-model = YOLO("../models/yolo11n_trained.pt")
+model = YOLO("../models/yolo11n_trained_ncnn_model")
 
 # Evaluate the model on a test dataset and calculate metrics
 # results = model.val(data='path/to/your/dataset.yaml')

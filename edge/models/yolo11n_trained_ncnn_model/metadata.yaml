@@ -1,0 +1,25 @@
+description: Ultralytics YOLO11n model trained on datasets/tomato-dataset-v2/data.yaml
+author: Ultralytics
+date: '2025-03-16T20:21:07.792138'
+version: 8.3.91
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: Early Blight
+  1: Healthy
+  2: Late Blight
+  3: Leaf Miner
+  4: Leaf Mold
+  5: Mosaic Virus
+  6: Septoria
+  7: Spider Mites
+  8: Yellow Leaf Curl Virus
+args:
+  batch: 1
+  half: false
