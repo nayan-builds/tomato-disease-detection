@@ -31,6 +31,13 @@ while True:
     # Run YOLO11 inference on the frame
     results = model(frame)
 
+    # Print detected object classes to the command line
+    for result in results:
+        for box in result.boxes:
+            class_id = int(box.cls)
+            class_name = model.names[class_id]
+            print(f"Detected: {class_name}")
+
     # Draw bounding boxes and labels on the frame
     annotated_frame = results[0].plot()
 
