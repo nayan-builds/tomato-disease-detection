@@ -34,8 +34,9 @@ def run_inference(model_path, image_folder):
         print(f"Results for {image_file}:")
         for result in results:
             for box in result.boxes:
-                class_name = result.names[int(box.cls)]
-                print(f"  Class: {class_name}, Confidence: {box.conf:.2f}")
+                class_id = int(box.cls)
+                class_name = model.names[class_id]
+                print(f"Detected: {class_name}")
 
     # Calculate and print average FPS
     avg_fps = total_images / total_time if total_time > 0 else 0
