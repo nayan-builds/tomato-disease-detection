@@ -1,0 +1,15 @@
+val: ../test/images
+
+nc: 9
+names:
+  [
+    "Early Blight",
+    "Healthy",
+    "Late Blight",
+    "Leaf Miner",
+    "Leaf Mold",
+    "Mosaic Virus",
+    "Septoria",
+    "Spider Mites",
+    "Yellow Leaf Curl Virus",
+  ]
