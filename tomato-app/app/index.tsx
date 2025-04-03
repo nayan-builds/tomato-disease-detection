@@ -3,8 +3,13 @@ import { Image, StyleSheet, Platform, ScrollView } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useEffect } from "react";
+import { saveGPSData } from "@/data/disease-locations";
 
 export default function HomeScreen() {
+  useEffect(() => {
+    saveGPSData();
+  }, []);
   return (
     <ScrollView>
       <ThemedView style={styles.titleContainer}>
