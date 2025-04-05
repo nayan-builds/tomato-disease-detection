@@ -28,8 +28,8 @@ const MapScreen: React.FC = () => {
         initialRegion={{
           latitude: locations[0]?.latitude || 37.7749,
           longitude: locations[0]?.longitude || -122.4194,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
       >
         {locations.map((loc, index) => (
