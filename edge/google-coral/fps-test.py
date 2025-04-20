@@ -16,6 +16,7 @@ def sigmoid(x):
 def run_yolo_inference(interpreter, image, conf_thresh=0.4):
     common.set_input(interpreter, image)
     start_time = time.perf_counter()
+    print(interpreter._delegates)  # should show EdgeTPU delegate
     interpreter.invoke()
     inference_time = time.perf_counter() - start_time
 
