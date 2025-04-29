@@ -1,11 +1,27 @@
 import cv2
 import time
+import os
+import sys
+import argparse
 from ultralytics import YOLO
 from notify.notifications import send_push_notification
 from gps.randomcoordinatess import get_random_coordinates
 
+# --- Parse command-line arguments ---
+parser = argparse.ArgumentParser(description="YOLO detection with push notifications.")
+parser.add_argument("--model", type=str, default="../models/yolo11n_trained_ncnn_model",
+                    help="Path to YOLO model (default: ../models/yolo11n_trained_ncnn_model)")
+
+args = parser.parse_args()
+model_path = args.model
+
+# Validate model path
+if not os.path.exists(model_path):
+    print(f"❌ Error: Model not found at {model_path}")
+    sys.exit(1)
+
 # Initialize YOLO model
-model = YOLO("../models/yolo11n_trained_ncnn_model")
+model = YOLO(model_path)
 
 # Open webcam
 cap = cv2.VideoCapture(0)
