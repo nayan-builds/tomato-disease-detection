@@ -9,7 +9,7 @@ from gps.randomcoordinatess import get_random_coordinates
 
 # --- Parse command-line arguments ---
 parser = argparse.ArgumentParser(description="YOLO detection with push notifications.")
-parser.add_argument("--model", type=str, default="../models/yolo11n_trained_ncnn_model",
+parser.add_argument("--model", type=str, default="models/yolo11n_trained_ncnn_model",
                     help="Path to YOLO model (default: ../models/yolo11n_trained_ncnn_model)")
 
 args = parser.parse_args()
