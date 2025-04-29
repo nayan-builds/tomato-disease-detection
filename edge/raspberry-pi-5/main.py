@@ -1,62 +1,96 @@
 import cv2
 import time
 from ultralytics import YOLO
+from notify.notifications import send_push_notification
+from gps.randomcoordinatess import get_random_coordinates
 
-# Load the YOLO11 model
+# Initialize YOLO model
 model = YOLO("../models/yolo11n_trained_ncnn_model")
 
-# Evaluate the model on a test dataset and calculate metrics
-# results = model.val(data='path/to/your/dataset.yaml')
-# print(results)
-
-# Initialize the webcam
+# Open webcam
 cap = cv2.VideoCapture(0)
-
-# Check if the webcam is opened correctly
 if not cap.isOpened():
     print("Error: Could not open webcam.")
     exit()
 
-# Variables to calculate FPS
+# FPS tracking
 fps = 0.0
 frame_count = 0
 start_time = time.time()
 
+# Detection tracking
+cooldown_seconds = 3
+class_cooldowns = {}
+detected_data = []
+
+# Push timing
+last_push_time = time.time()
+push_interval = 60  # 1 minute in seconds
+
+# Main loop
 while True:
     ret, frame = cap.read()
     if not ret:
         print("Error: Failed to capture image")
         break
 
-    # Run YOLO11 inference on the frame
     results = model(frame)
 
-    # Print detected object classes to the command line
+    current_time = time.time()
+
     for result in results:
         for box in result.boxes:
             class_id = int(box.cls)
             class_name = model.names[class_id]
-            print(f"Detected: {class_name}")
 
-    # Draw bounding boxes and labels on the frame
+            # Skip if class is "Healthy"
+            if class_name == "Healthy":
+                continue
+
+            # Cooldown check
+            last_detected = class_cooldowns.get(class_name, 0)
+            if current_time - last_detected >= cooldown_seconds:
+                print(f"Detected: {class_name}")
+                gps_coords = get_random_coordinates()
+
+                # Add to data
+                detected_data.append({
+                    "class": class_name,
+                    "gps": gps_coords,
+                    "timestamp": time.strftime('%Y-%m-%d %H:%M:%S')
+                })
+
+                # Start cooldown for this class
+                class_cooldowns[class_name] = current_time
+
+    # Draw results
     annotated_frame = results[0].plot()
 
-    # Calculate FPS
+    # FPS calculation
     frame_count += 1
     elapsed_time = time.time() - start_time
     if elapsed_time > 0:
         fps = frame_count / elapsed_time
 
-    # Display FPS on the frame
-    cv2.putText(annotated_frame, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    cv2.putText(annotated_frame, f"FPS: {fps:.2f}", (10, 30),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    # Display the resulting frame
     cv2.imshow('YOLO11 Real-Time Inference', annotated_frame)
 
-    # Break the loop if 'q' is pressed
+    # Send push notification every 5 minutes if data exists
+    if current_time - last_push_time >= push_interval and detected_data:
+        print("Sending push notification with detected data...")
+        send_push_notification(
+            title="Tomato Disease Alert",
+            body=f"{len(detected_data)} detections in last 5 minutes",
+            data={"detections": detected_data}
+        )
+        detected_data.clear()
+        last_push_time = current_time
+
+    # Exit on 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release the webcam and close windows
 cap.release()
 cv2.destroyAllWindows()
