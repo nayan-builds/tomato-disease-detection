@@ -8,6 +8,8 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+google-services.json
+tomato-diseases-app-firebase-adminsdk-fbsvc-4c2937f5aa.json
 
 # Native
 *.orig.*
