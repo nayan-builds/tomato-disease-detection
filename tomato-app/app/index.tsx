@@ -1,6 +1,4 @@
-import { Image, StyleSheet, Platform, ScrollView } from "react-native";
-
-import { HelloWave } from "@/components/HelloWave";
+import { StyleSheet, Platform, ScrollView } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useEffect, useRef, useState } from "react";
@@ -67,19 +65,6 @@ export default function HomeScreen() {
           You can also view suggestions for each disease from the "Diseases"
           tab.
         </ThemedText>
-      </ThemedView>
-      <ThemedView
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <ThemedText type="default">Your token:</ThemedText>
-        <ThemedText type="default" selectable>
-          {expoPushToken}
-        </ThemedText>
-        {notification && (
-          <ThemedText type="default">
-            Notification: {notification.request.content.title}
-          </ThemedText>
-        )}
       </ThemedView>
     </ScrollView>
   );

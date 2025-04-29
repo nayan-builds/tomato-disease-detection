@@ -2,12 +2,6 @@ import * as FileSystem from "expo-file-system";
 
 const fileUri = FileSystem.documentDirectory + "gps-data.json";
 
-// Sample GPS data
-const sampleData = [
-  { latitude: 50.66324925099582, longitude: -1.2250455485299183, name: "Early Blight", description: "Possible Early Blight Detected" },
-  { latitude: 50.662751769516575, longitude: -1.2263564551031554, name: "Septoria", description: "Possible Septoria Detected" }
-];
-
 interface GPSLocation {
   latitude: number;
   longitude: number;
@@ -16,9 +10,9 @@ interface GPSLocation {
 }
 
 // Function to save JSON
-const saveGPSData = async () => {
+const saveGPSData = async (data: GPSLocation[] = []) => {
   try {
-    await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(sampleData));
+    await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
     console.log("File saved successfully at:", fileUri);
   } catch (error) {
     console.error("Error saving file:", error);
