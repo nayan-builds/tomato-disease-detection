@@ -24,7 +24,7 @@ export default function HomeScreen() {
   );
   const responseListener = useRef<Notifications.EventSubscription | null>(null);
   useEffect(() => {
-    saveGPSData();
+    saveGPSData(); // Clear the GPS data when the app starts for demo purposes
     registerForPushNotificationsAsync().then((token) => {
       if (token) {
         setExpoPushToken(token);
