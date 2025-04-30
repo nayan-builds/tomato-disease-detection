@@ -94,14 +94,15 @@ while True:
     cv2.imshow('YOLO11 Real-Time Inference', annotated_frame)
 
     # Send push notification every push_interval seconds if data exists
-    if current_time - last_push_time >= push_interval and detected_data:
-        print("Sending push notification with detected data...")
-        send_push_notification(
-            title="Tomato Disease Alert",
-            body=f"{len(detected_data)} detections in last scan",
-            data={"detections": detected_data}
-        )
-        detected_data.clear()
+    if current_time - last_push_time >= push_interval:
+        if detected_data:
+            print("Sending push notification with detected data...")
+            send_push_notification(
+                title="Tomato Disease Alert",
+                body=f"{len(detected_data)} detections in last scan",
+                data={"detections": detected_data}
+            )
+            detected_data.clear()
         last_push_time = current_time
 
     # Exit on 'q'
