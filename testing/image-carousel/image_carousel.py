@@ -54,7 +54,7 @@ def display_images(directory):
     window.mainloop()
 
 if len(sys.argv) != 2:
-    print("Usage: python slideshow_images.py <path_to_directory>")
+    print("Usage: python image-carousel.py <path_to_directory>")
 else:
     directory_path = sys.argv[1]
     display_images(directory_path)
