@@ -50,7 +50,7 @@ while True:
         print("Error: Failed to capture image")
         break
 
-    results = model(frame)
+    results = model.predict(frame, conf=0.4)
 
     current_time = time.time()
 
